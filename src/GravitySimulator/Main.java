@@ -1,5 +1,6 @@
 package GravitySimulator;
 
+import GravitySimulator.Physics.Vector2D;
 import GravitySimulator.Render2D.FrameRenderer;
 
 import java.util.ArrayList;
@@ -10,13 +11,13 @@ public class Main {
 
         FrameRenderer frameRenderer = new FrameRenderer(500,500,1);
 
-
         ArrayList<SpaceBody> spaceBodies = new ArrayList<>();
-        spaceBodies.add(new SpaceBody(0,0,20,2,2,SpaceBody.randomColorGenerator()));
+
+        Vector2D.convertToDegree(Vector2D.angleTwoPoints(0,0,0.3327850241072f, -0.4612964108314f));
 
         while(true){
 
-            testingDemoVisuals(frameRenderer,spaceBodies);
+            //testingDemoVisuals(frameRenderer,spaceBodies);
             Thread.sleep(10);
         }
 

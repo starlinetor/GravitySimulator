@@ -1,7 +1,5 @@
 package GravitySimulator.Render2D;
-
 import GravitySimulator.SpaceBody;
-
 import javax.swing.*;
 import java.util.ArrayList;
 
