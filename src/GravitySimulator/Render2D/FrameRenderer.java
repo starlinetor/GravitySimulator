@@ -7,9 +7,9 @@ public class FrameRenderer extends JFrame {
     //This class handles rendering
     PanelRenderer panelRenderer;
 
-    public FrameRenderer(int width, int height, float radiusMassRatio){
+    public FrameRenderer(int width, int height, float radiusMassRatio, boolean legacy){
 
-        this.panelRenderer = new PanelRenderer(width,height,radiusMassRatio);
+        this.panelRenderer = new PanelRenderer(width,height,radiusMassRatio,legacy);
         //create panel
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panelRenderer);

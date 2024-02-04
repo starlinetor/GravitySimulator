@@ -1,24 +1,48 @@
 package GravitySimulator;
 
+import GravitySimulator.Physics.NLOUG;
 import GravitySimulator.Physics.Vector2D;
 import GravitySimulator.Render2D.FrameRenderer;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
-        FrameRenderer frameRenderer = new FrameRenderer(500,500,1);
-
+        FrameRenderer frameRenderer = new FrameRenderer(1000,700,2,false);
+        NLOUG nloug = new NLOUG(0.000002f);
         ArrayList<SpaceBody> spaceBodies = new ArrayList<>();
-
-        Vector2D.convertToDegree(Vector2D.angleTwoPoints(0,0,0.3327850241072f, -0.4612964108314f));
+        spaceBodies.add(new SpaceBody(
+                new Vector2D(500,350,true),
+                new Vector2D(0,0,true),
+                100000000,
+                Color.BLACK));
+        spaceBodies.add(new SpaceBody(
+                new Vector2D(500,150,true),
+                new Vector2D(1.1f,0,true),
+                100000,
+                Color.BLACK));
+        spaceBodies.add(new SpaceBody(
+                new Vector2D(500,140,true),
+                new Vector2D(1.2f,0,true),
+                1000,
+                Color.BLACK));
 
         while(true){
 
+            nloug.PhysicsEngine(spaceBodies);
+
             //testingDemoVisuals(frameRenderer,spaceBodies);
-            Thread.sleep(10);
+            frameRenderer.newFrame(spaceBodies);
+
+
+            //to go a step at the time
+            //System.in.read();
+
+            Thread.sleep(1);
         }
 
     }

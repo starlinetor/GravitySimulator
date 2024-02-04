@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GravitySimulator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GravitySimulator_jar</output-path>
+    <root id="archive" name="GravitySimulator.jar">
+      <element id="module-output" name="GravitySimulator" />
+    </root>
+  </artifact>
+</component>
