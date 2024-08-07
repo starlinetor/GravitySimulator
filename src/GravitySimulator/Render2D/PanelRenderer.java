@@ -19,6 +19,10 @@ public class PanelRenderer extends JPanel {
         this.legacy = legacy;
     }
 
+    public float getRadiusMassRatio(){
+        return radiusMassRatio;
+    }
+
     public void setSpaceBodies(ArrayList<SpaceBody> spaceBodies){
         this.spaceBodies = spaceBodies;
     }

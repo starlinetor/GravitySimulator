@@ -52,6 +52,19 @@ public class Vector2D {
         this.yComponent += vector.getYComponent();
     }
 
+    public void multiply(float multiplier){
+        this.xComponent *= multiplier;
+        this.yComponent *= multiplier;
+    }
+
+    public Vector2D multiplyReturn(float multiplier){
+        return new Vector2D(this.xComponent * multiplier, this.yComponent * multiplier, false);
+    }
+
+    public float getModule(){
+        return (float) Math.sqrt(Math.pow(this.xComponent, 2) + Math.pow(this.yComponent, 2));
+    }
+
     //static methods
     public static float distanceTwoPoints(Vector2D vector1,Vector2D vector2){
         float x1 = vector1.getXComponent();
@@ -75,11 +88,36 @@ public class Vector2D {
         float baseAngle = (float) Math.acos(Math.abs(deltaX)/distance);
 
         //this is necessary to have the angle always based on the x-axis going anticlockwise
-        if(deltaX > 0 && deltaY > 0){
+        if(deltaX >= 0 && deltaY >= 0){
             return baseAngle;
-        }else if(deltaX < 0 && deltaY>0){
+        }else if(deltaX <= 0 && deltaY>=0){
             return pi-baseAngle;
-        } else if (deltaX>0 && deltaY<0) {
+        } else if (deltaX>= 0 && deltaY<= 0) {
+            return 2*pi-baseAngle;
+        }else{
+            return pi+baseAngle;
+        }
+    }
+
+    public static float angleTwoPoints(Vector2D vector1,Vector2D vector2){
+
+        float distance = distanceTwoPoints(vector1,vector2);
+
+        float x1 = vector1.getXComponent();
+        float y1 = vector1.getYComponent();
+        float x2 = vector2.getXComponent();
+        float y2 = vector2.getYComponent();
+
+        float deltaX = x2-x1;
+        float deltaY = y2-y1;
+        float baseAngle = (float) Math.acos(Math.abs(deltaX)/distance);
+
+        //this is necessary to have the angle always based on the x-axis going anticlockwise
+        if(deltaX >= 0 && deltaY >= 0){
+            return baseAngle;
+        }else if(deltaX <= 0 && deltaY>=0){
+            return pi-baseAngle;
+        } else if (deltaX>= 0 && deltaY<= 0) {
             return 2*pi-baseAngle;
         }else{
             return pi+baseAngle;
@@ -90,4 +128,7 @@ public class Vector2D {
     public static void convertToDegree(float radiant){
         System.out.println("Angle : "+(radiant/0.7853982)*45);
     }
+
+
+
 }

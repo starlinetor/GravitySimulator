@@ -1,5 +1,6 @@
 package GravitySimulator;
 
+import GravitySimulator.Physics.ConservationOfME;
 import GravitySimulator.Physics.NLOUG;
 import GravitySimulator.Physics.Vector2D;
 import GravitySimulator.Render2D.FrameRenderer;
@@ -10,39 +11,44 @@ import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static <bool> void main(String[] args) throws InterruptedException, IOException {
 
-        FrameRenderer frameRenderer = new FrameRenderer(1000,700,2,false);
+        FrameRenderer frameRenderer = new FrameRenderer(1000,700,2f,false);
         NLOUG nloug = new NLOUG(0.000002f);
         ArrayList<SpaceBody> spaceBodies = new ArrayList<>();
+
         spaceBodies.add(new SpaceBody(
-                new Vector2D(500,350,true),
-                new Vector2D(0,0,true),
+                new Vector2D(500,200,true),
+                new Vector2D(0.5f,0.001f,true),
+                100000000,
+                Color.RED));
+
+        spaceBodies.add(new SpaceBody(
+                new Vector2D(500,500,true),
+                new Vector2D(-0.5f,0.001f,true),
                 100000000,
                 Color.BLACK));
-        spaceBodies.add(new SpaceBody(
-                new Vector2D(500,150,true),
-                new Vector2D(1.1f,0,true),
-                100000,
-                Color.BLACK));
-        spaceBodies.add(new SpaceBody(
-                new Vector2D(500,140,true),
-                new Vector2D(1.2f,0,true),
-                1000,
-                Color.BLACK));
+
+
+        final float deltaT =0.01F;
+
+        ConservationOfME debugMomentum = new ConservationOfME(spaceBodies);
 
         while(true){
 
-            nloug.PhysicsEngine(spaceBodies);
+            //physics engine
+            nloug.PhysicsEngine(spaceBodies,deltaT);
 
-            //testingDemoVisuals(frameRenderer,spaceBodies);
+            //renders a new frame
             frameRenderer.newFrame(spaceBodies);
 
+            //Momentum debug
+            debugMomentum.momentumTester(spaceBodies,deltaT);
 
             //to go a step at the time
-            //System.in.read();
+            Thread.sleep(0, 0);
 
-            Thread.sleep(1);
+
         }
 
     }

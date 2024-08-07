@@ -26,7 +26,9 @@ public class FrameRenderer extends JFrame {
     public int getPanelHeight(){
         return panelRenderer.getHeight();
     }
-
+    public PanelRenderer getPanelRenderer() {
+        return panelRenderer;
+    }
     //calls the function to render the next frame
     public void newFrame(ArrayList<SpaceBody> spaceBodies){
         panelRenderer.setSpaceBodies(spaceBodies);

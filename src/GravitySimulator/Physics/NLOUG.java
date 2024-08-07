@@ -16,6 +16,7 @@ public class NLOUG {
     public float calculateAcceleration(float mass, float distance){
         //this is just the base newton law without the mass of the object because is the acceleration of it
         return (float) ((G*mass)/(Math.pow(distance,2)));
+
     }
 
     public void PhysicsEngine(ArrayList<SpaceBody> spaceBodies){
@@ -27,9 +28,7 @@ public class NLOUG {
             body.getAcceleration().clear();
             ArrayList<SpaceBody> otherBodies = (ArrayList<SpaceBody>) spaceBodies.clone();
             otherBodies.remove(body);
-            for(int j=0; j <otherBodies.size(); j++){
-
-                SpaceBody otherBody = otherBodies.get(j);
+            for (SpaceBody otherBody : otherBodies) {
 
                 float distance = Vector2D.distanceTwoPoints(
                         body.getCoordinates(),
@@ -40,11 +39,41 @@ public class NLOUG {
                                 otherBody.getMass(),
                                 distance),
                         Vector2D.angleTwoPoints(body.getCoordinates()
-                                ,otherBody.getCoordinates()
-                                ,distance)));
+                                , otherBody.getCoordinates()
+                                , distance)));
             }
             body.getVelocity().add(body.getAcceleration());
             body.getCoordinates().add(body.getVelocity());
+        }
+    }
+
+    //new physics engine that can handle DeltaT, lower values increase precision but more iterations are needed
+    //low Delta values reduce the drift of momentum resulting in more stable and realistic orbits.
+    public void PhysicsEngine(ArrayList<SpaceBody> spaceBodies, float deltaT){
+
+        for (int i=0; i<spaceBodies.size();i++){
+
+            SpaceBody body = spaceBodies.get(i);
+
+            body.getAcceleration().clear();
+            ArrayList<SpaceBody> otherBodies = (ArrayList<SpaceBody>) spaceBodies.clone();
+            otherBodies.remove(body);
+            for (SpaceBody otherBody : otherBodies) {
+
+                float distance = Vector2D.distanceTwoPoints(
+                        body.getCoordinates(),
+                        otherBody.getCoordinates());
+
+                body.getAcceleration().add(new Vector2D(
+                        calculateAcceleration(
+                                otherBody.getMass(),
+                                distance),
+                        Vector2D.angleTwoPoints(body.getCoordinates()
+                                , otherBody.getCoordinates()
+                                , distance)));
+            }
+            body.getVelocity().add(body.getAcceleration().multiplyReturn(deltaT));
+            body.getCoordinates().add(body.getVelocity().multiplyReturn(deltaT));
         }
     }
 
